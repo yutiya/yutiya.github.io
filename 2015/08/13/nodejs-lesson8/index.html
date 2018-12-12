@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>Nodejs第八课 - Meone Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="测试用例:supertest学习中,原文链接 目标建立一个lesson8项目,在其中编写代码      app.js:其中有个fibonacci接口 fibonacci函数的定义为int fibonacci(int n),调用函数的url路径是/fib?n=10,然后这个接口会返回55函数的行为定义如下:      当n === 0时,返回0;n === 1时，返回1 n &amp;gt; 1时,返回fi">
+<meta name="keywords" content="lesson">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nodejs第八课">
+<meta property="og:url" content="http://yutiya.github.io/2015/08/13/nodejs-lesson8/index.html">
+<meta property="og:site_name" content="Meone Blog">
+<meta property="og:description" content="测试用例:supertest学习中,原文链接 目标建立一个lesson8项目,在其中编写代码      app.js:其中有个fibonacci接口 fibonacci函数的定义为int fibonacci(int n),调用函数的url路径是/fib?n=10,然后这个接口会返回55函数的行为定义如下:      当n === 0时,返回0;n === 1时，返回1 n &amp;gt; 1时,返回fi">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yutiya.github.io/images/nodejs/lesson8/1.png">
+<meta property="og:updated_time" content="2018-12-12T03:20:07.864Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nodejs第八课">
+<meta name="twitter:description" content="测试用例:supertest学习中,原文链接 目标建立一个lesson8项目,在其中编写代码      app.js:其中有个fibonacci接口 fibonacci函数的定义为int fibonacci(int n),调用函数的url路径是/fib?n=10,然后这个接口会返回55函数的行为定义如下:      当n === 0时,返回0;n === 1时，返回1 n &amp;gt; 1时,返回fi">
+<meta name="twitter:image" content="http://yutiya.github.io/images/nodejs/lesson8/1.png">
+
+
+
+
+
+<link rel="icon" href="/images/favicon.ico">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.png" alt="Nodejs第八课" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">主页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="GitHub" href="https://github.com/yutiya">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2015-08-13T10:20:25.000Z">2015-08-13</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/nodejs/">nodejs</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/nodejs/lesson/">lesson</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1124 个字)
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                Nodejs第八课
+            
+        </h1>
+        <div class="content">
+            <h2 id="测试用例-supertest"><a href="#测试用例-supertest" class="headerlink" title="测试用例:supertest"></a>测试用例:supertest</h2><p>学习中,<a href="https://github.com/alsotang/node-lessons/tree/master/lesson8" target="_blank" rel="noopener">原文链接</a></p>
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>建立一个lesson8项目,在其中编写代码     </p>
+<p>app.js:其中有个fibonacci接口</p>
+<p>fibonacci函数的定义为<code>int fibonacci(int n)</code>,调用函数的url路径是<code>/fib?n=10</code>,然后这个接口会返回55<br>函数的行为定义如下:    </p>
+<ul>
+<li>当<code>n === 0</code>时,返回0;<code>n === 1</code>时，返回1</li>
+<li><code>n &gt; 1</code>时,返回<code>fibonacci(n) === fibonacci(n-1) + fibonacci(n-2)</code>,如<code>fibonacci(10) === 55</code></li>
+<li>n不可大于10,否则抛错,<code>http status 500</code>,因为Node.js的计算性能没那么强。</li>
+<li>n也不可小于0,否则抛错500,因为没意义。</li>
+<li>n不为数字时，抛错,500</li>
+</ul>
+<p>test/app.test.js:对app的接口进行测试,覆盖以上所有情况</p>
+<h3 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h3><ul>
+<li>学习<a href="https://github.com/tj/supertest" target="_blank" rel="noopener">supertest</a>的使用</li>
+<li>复习mocha,should的使用</li>
+</ul>
+<h3 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm init <span class="hljs-comment"># 来吧,一阵阵的键盘声(不停的回车)</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>然后编写安装模块<br><code>$ npm install xxx --save</code>和<code>$ npm install xxx --save-dev</code>是有差异的噢,修改于配置文件中的地方不同噢</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&quot;devDependencies&quot;: &#123;</span><br><span class="line">    &quot;mocha&quot;: &quot;^1.21.4&quot;,</span><br><span class="line">    &quot;should&quot;: &quot;^4.0.4&quot;,</span><br><span class="line">    &quot;supertest&quot;: &quot;^0.14.0&quot;</span><br><span class="line">&#125;,</span><br><span class="line">&quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;express&quot;: &quot;^4.9.6&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编写代码app.js:</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">var express = require(&apos;express&apos;);</span><br><span class="line"></span><br><span class="line">var fibonacci = function(n) &#123;</span><br><span class="line">    if (typeof n !== &apos;number&apos; || isNaN(n)) &#123;</span><br><span class="line">        throw new Error(&apos;n should be a Number&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">    if (n &lt; 0) &#123;</span><br><span class="line">        throw new Error(&apos;n should &gt;= 0&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">    if (n &gt; 10) &#123;</span><br><span class="line">        throw new Error(&apos;n should &lt;= 10&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">    if (n === 0) &#123;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line">    if (n === 1) &#123;</span><br><span class="line">        return 1;</span><br><span class="line">    &#125;</span><br><span class="line">    return fibonacci(n-1) + fibonacci(n-2);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">var app = express();</span><br><span class="line"></span><br><span class="line">app.get(&apos;/fib&apos;, function(req, res)&#123;</span><br><span class="line">    var n = Number(req.query.n);</span><br><span class="line">    try&#123;</span><br><span class="line">        //如果直接给个数字的话,它会当成你给了一个http状态码,所以我们转换成String</span><br><span class="line">        res.send(String(fibonacci(n)));</span><br><span class="line">    &#125; catch(e) &#123;</span><br><span class="line">        res.status(500)</span><br><span class="line">            .send(e.message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">// module.exports与exports的区别</span><br><span class="line">module.exports = app;</span><br><span class="line"></span><br><span class="line">app.listen(3000, function()&#123;</span><br><span class="line">    console.log(&apos;app ls listening at port 3000&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>运行<code>$ node app.js</code></p>
+<p>访问<code>http://localhost:3000/fib?n=10</code>,看到55就成功了.<br>访问<code>http://localhost:3000/fib?n=111</code>,会看到<code>n should &lt;= 10</code>.    </p>
+<p>大家可以去安装一个<a href="https://github.com/remy/nodemon" target="_blank" rel="noopener">nodemon</a><br><code>$ npm install -g nodemon</code><br>这个库是专门调试的时候使用,会自动检测Node.js代码的改动,然后帮你自动重启应用<br>在调试时可以完全用nodemon命令代替node命令<br>使用<code>$ nodemon app.js</code>启动我们的应用试试,然后添加两行输出代码,应用自动重启了    </p>
+<p>现在我们继续写完测试代码,<code>test/app.test.js</code>:    </p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">var app = require(&apos;../app&apos;);</span><br><span class="line">var supertest = require(&apos;supertest&apos;);</span><br><span class="line">//关键代码,下面的request对象可以直接按照</span><br><span class="line">//superagent的api进行调用</span><br><span class="line">var request = supertest(app);</span><br><span class="line"></span><br><span class="line">var should = require(&apos;should&apos;);</span><br><span class="line"></span><br><span class="line">describe(&apos;test/app.test.js&apos;, function()&#123;</span><br><span class="line">    it(&apos;should return 55 when n is 10&apos;, function(done)&#123;</span><br><span class="line">        //function之所以要接受一个done函数,是因为我们的测试内容涉及了异步调用</span><br><span class="line">        //而mocha是无法感知异步调用完成的.所以主动接受它提供的done函数</span><br><span class="line">        //在测试完毕时,自行调用一下,表示结束</span><br><span class="line">        //mocha可以感知到我们的测试函数是否接受done参数.</span><br><span class="line">        //js中,function对象是有长度的,长度由它的参数数量决定</span><br><span class="line">        //(function(a, b, c, d)&#123;&#125;).length === 4</span><br><span class="line">        //所以mocha测试了函数的长度就可以确定我们是否是异步测试</span><br><span class="line"></span><br><span class="line">        request.get(&apos;/fib&apos;)</span><br><span class="line">            //query方法用来传querystring</span><br><span class="line">            //send方法用来传body</span><br><span class="line">            //下面的query等于访问 /fib?n=10</span><br><span class="line">            .query(&#123;n: 10&#125;)</span><br><span class="line">            .end(function(err, res)&#123;</span><br><span class="line">                //http返回的是string,所以传入字符串&apos;55&apos;</span><br><span class="line">                res.text.should.equal(&apos;55&apos;);</span><br><span class="line">                done(err);</span><br><span class="line">                // done(err)用法很鸡肋</span><br><span class="line">                // 完整写法</span><br><span class="line">                /*</span><br><span class="line">                should.not.exist(err);</span><br><span class="line">                res.text.should.equal(&apos;55&apos;);</span><br><span class="line">                */</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    //由于代码基本相似,我们抽象一个testFib方法</span><br><span class="line">    var testFib = function(n, statusCode, expect, done) &#123;</span><br><span class="line">        request.get(&apos;/fib&apos;)</span><br><span class="line">            .query(&#123;n: n&#125;)</span><br><span class="line">            .expect(statusCode)</span><br><span class="line">            .end(function(err, res)&#123;</span><br><span class="line">                res.text.should.equal(expect);</span><br><span class="line">                done(err);</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    it(&apos;should return 0 when n === 0&apos;, function(done) &#123;</span><br><span class="line">        testFib(0, 200, &apos;0&apos;, done);</span><br><span class="line">    &#125;);</span><br><span class="line">    it(&apos;should return 1 when n === 1&apos;, function(done) &#123;</span><br><span class="line">        testFib(1, 200, &apos;1&apos;, done);</span><br><span class="line">    &#125;);</span><br><span class="line">    it(&apos;should equal 55 when n === 10&apos;, function(done) &#123;</span><br><span class="line">        testFib(10, 200, &apos;55&apos;, done);</span><br><span class="line">    &#125;);</span><br><span class="line">    it(&apos;should throw error when n &gt; 10&apos;, function(done) &#123;</span><br><span class="line">        testFib(11, 500, &apos;n should &lt;= 10&apos;, done);</span><br><span class="line">    &#125;);</span><br><span class="line">    it(&apos;should throw error when n &lt; 0&apos;, function(done) &#123;</span><br><span class="line">        testFib(-1, 500, &apos;n should &gt;= 0&apos;, done);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    //单独测试一下返回码500</span><br><span class="line">    it(&apos;should status 500 when error&apos;, function(done) &#123;</span><br><span class="line">        request.get(&apos;/fib&apos;)</span><br><span class="line">            .query(&#123;n: 100&#125;)</span><br><span class="line">            .expect(500)</span><br><span class="line">            .end(function(err, res) &#123;</span><br><span class="line">                done(err);</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>执行<code>$ mocha</code>,得到结果    </p>
+<p><img src="/images/nodejs/lesson8/1.png" alt=""></p>
+<h3 id="关于cookie持久化"><a href="#关于cookie持久化" class="headerlink" title="关于cookie持久化"></a>关于cookie持久化</h3><ul>
+<li>1.在supertest中,通过<code>var agent = supertest.agent(app)</code>获取一个agent对象,这个对象的API跟直接在superagent上调用各种方法是一样的.agent对象在被多次调用get和post之后,可以一路把cookie都保存下来    </li>
+</ul>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var supertest = require(&apos;supertest&apos;);</span><br><span class="line">var app = express();</span><br><span class="line">var agent = supertest.agent(app);</span><br><span class="line"></span><br><span class="line">agent.post(&apos;login&apos;).end(...);</span><br><span class="line">// do somethings ...</span><br><span class="line">agent.post(&apos;create_topic&apos;).end(...); // 此时的agent中有用户登录后的cookie</span><br></pre></td></tr></table></figure>
+<ul>
+<li>2.在发起请求时,调用<code>.set(&#39;Cookie&#39;, &#39;a cookie string&#39;)</code>这样的方式.</li>
+</ul>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var supertest = require(&apos;supertest&apos;);</span><br><span class="line">var userCookie;</span><br><span class="line">supertest.post(&apos;login&apos;).end(function(err, res) &#123;</span><br><span class="line">    userCookie = res.headers[&apos;Cookie&apos;];</span><br><span class="line">&#125;);</span><br><span class="line">supertest.post(&apos;create_topic&apos;)</span><br><span class="line">    .set(&apos;Cookie&apos;, userCookie)</span><br><span class="line">    .end(...);</span><br></pre></td></tr></table></figure>
+<p>这里边有非常详细的介绍,可以学习:<br><a href="https://github.com/cnodejs/nodeclub/blob/master/test/controllers/topic.test.js" target="_blank" rel="noopener">https://github.com/cnodejs/nodeclub/blob/master/test/controllers/topic.test.js</a></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/lesson/">lesson</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2015/08/13/hexo-Bug/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Hexo Bug</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2015/08/12/ReactiveCocoa初体验/">
+                <span class="level-item">ReactiveCocoa初体验</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="Meone">
+                    
+                    <p class="is-size-4 is-block">
+                        Meone
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        iOS Developer &amp; Coder
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>重庆，中国 &amp; ChongQing, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        42
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        41
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        26
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="http://github.com/yutiya">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="http://github.com/yutiya">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Facebook" href="http://facebook.com">
+                
+                <i class="fab fa-facebook"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Twitter" href="http://twitter.com">
+                
+                <i class="fab fa-twitter"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Dribbble" href="http://dribbble.com">
+                
+                <i class="fab fa-dribbble"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://github.com/yutiya" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Meone</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">https://github.com/yutiya</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://hexo.io" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Hexo</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">https://hexo.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://github.com/ppoffice" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">PPOffice</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">https://github.com/ppoffice</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/AngularJS/">
+            <span class="level-start">
+                <span class="level-item">AngularJS</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/AngularJS/build/">
+            <span class="level-start">
+                <span class="level-item">build</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/C/">
+            <span class="level-start">
+                <span class="level-item">C</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/C/HelloWorld/">
+            <span class="level-start">
+                <span class="level-item">HelloWorld</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/C/const/">
+            <span class="level-start">
+                <span class="level-item">const</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/C/数组名/">
+            <span class="level-start">
+                <span class="level-item">数组名</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/FFmpeg/">
+            <span class="level-start">
+                <span class="level-item">FFmpeg</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/FFmpeg/iOS/">
+            <span class="level-start">
+                <span class="level-item">iOS</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/Hexo/">
+            <span class="level-start">
+                <span class="level-item">Hexo</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/Hexo/Bug/">
+            <span class="level-start">
+                <span class="level-item">Bug</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Hexo/HelloWorld/">
+            <span class="level-start">
+                <span class="level-item">HelloWorld</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Hexo/icarus/">
+            <span class="level-start">
+                <span class="level-item">icarus</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/Java/">
+            <span class="level-start">
+                <span class="level-item">Java</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/Java/Socket/">
+            <span class="level-start">
+                <span class="level-item">Socket</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/Javascript/">
+            <span class="level-start">
+                <span class="level-item">Javascript</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/Redis/">
+            <span class="level-start">
+                <span class="level-item">Redis</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/Redis/study/">
+            <span class="level-start">
+                <span class="level-item">study</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/Shell/">
+            <span class="level-start">
+                <span class="level-item">Shell</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/Shell/course/">
+            <span class="level-start">
+                <span class="level-item">course</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/github/">
+            <span class="level-start">
+                <span class="level-item">github</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/">
+            <span class="level-start">
+                <span class="level-item">iOS</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">6</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/iOS/NSUrlSession/">
+            <span class="level-start">
+                <span class="level-item">NSUrlSession</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/ReactiveCocoa/">
+            <span class="level-start">
+                <span class="level-item">ReactiveCocoa</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/UIDynamic/">
+            <span class="level-start">
+                <span class="level-item">UIDynamic</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/URLencode/">
+            <span class="level-start">
+                <span class="level-item">URLencode</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/orientation/">
+            <span class="level-start">
+                <span class="level-item">orientation</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/iOS/view/">
+            <span class="level-start">
+                <span class="level-item">view</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/java/">
+            <span class="level-start">
+                <span class="level-item">java</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/java/Hadoop/">
+            <span class="level-start">
+                <span class="level-item">Hadoop</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/java/maven/">
+            <span class="level-start">
+                <span class="level-item">maven</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/nodejs/">
+            <span class="level-start">
+                <span class="level-item">nodejs</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">16</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/nodejs/exports/">
+            <span class="level-start">
+                <span class="level-item">exports</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/nodejs/lesson/">
+            <span class="level-start">
+                <span class="level-item">lesson</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">14</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/nodejs/npm/">
+            <span class="level-start">
+                <span class="level-item">npm</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/swift/">
+            <span class="level-start">
+                <span class="level-item">swift</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/swift/lesson/">
+            <span class="level-start">
+                <span class="level-item">lesson</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/yaml/">
+            <span class="level-start">
+                <span class="level-item">yaml</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/正则表达式/">
+            <span class="level-start">
+                <span class="level-item">正则表达式</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/百度地图SDK/">
+            <span class="level-start">
+                <span class="level-item">百度地图SDK</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/百度地图SDK/bug/">
+            <span class="level-start">
+                <span class="level-item">bug</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/AngularJS/" style="font-size: 10px;">AngularJS</a> <a href="/tags/FFmpeg/" style="font-size: 10px;">FFmpeg</a> <a href="/tags/HelloWorld/" style="font-size: 10px;">HelloWorld</a> <a href="/tags/Hexo/" style="font-size: 16.67px;">Hexo</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/tags/ReactiveCocoa/" style="font-size: 10px;">ReactiveCocoa</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Shell/" style="font-size: 13.33px;">Shell</a> <a href="/tags/UIDynamic/" style="font-size: 10px;">UIDynamic</a> <a href="/tags/URLencode/" style="font-size: 10px;">URLencode</a> <a href="/tags/const/" style="font-size: 10px;">const</a> <a href="/tags/exports/" style="font-size: 10px;">exports</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/lesson/" style="font-size: 20px;">lesson</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/orientation/" style="font-size: 10px;">orientation</a> <a href="/tags/swift/" style="font-size: 10px;">swift</a> <a href="/tags/view/" style="font-size: 10px;">view</a> <a href="/tags/yaml/" style="font-size: 10px;">yaml</a> <a href="/tags/数组名/" style="font-size: 10px;">数组名</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a> <a href="/tags/百度地图/" style="font-size: 10px;">百度地图</a>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2018/11/30/FFmpeg-iOS环境下编译-md/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="FFmpeg-iOS环境下编译">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-30T07:27:38.000Z">2018-11-30</time></div>
+                    <a href="/2018/11/30/FFmpeg-iOS环境下编译-md/" class="has-link-black-ter is-size-6">FFmpeg-iOS环境下编译</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/FFmpeg/">FFmpeg</a> / <a class="has-link-grey -link" href="/categories/FFmpeg/iOS/">iOS</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2015/11/27/NSUrlSession-Study/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="NSUrlSession-Study">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2015-11-27T04:27:56.000Z">2015-11-27</time></div>
+                    <a href="/2015/11/27/NSUrlSession-Study/" class="has-link-black-ter is-size-6">NSUrlSession-Study</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/NSUrlSession/">NSUrlSession</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2015/11/17/Java-Socket-Object/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Java Socket中的ObjectOutputStream和ObjectInputStream">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2015-11-17T09:16:14.000Z">2015-11-17</time></div>
+                    <a href="/2015/11/17/Java-Socket-Object/" class="has-link-black-ter is-size-6">Java Socket中的ObjectOutputStream和ObjectInputStream</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Java/">Java</a> / <a class="has-link-grey -link" href="/categories/Java/Socket/">Socket</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2015/11/04/view和layer缠绵/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="view和layer缠绵">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2015-11-04T07:16:14.000Z">2015-11-04</time></div>
+                    <a href="/2015/11/04/view和layer缠绵/" class="has-link-black-ter is-size-6">view和layer缠绵</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/view/">view</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2015/10/16/nodejs-lesson13/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Nodejs第十三课">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2015-10-16T03:00:18.000Z">2015-10-16</time></div>
+                    <a href="/2015/10/16/nodejs-lesson13/" class="has-link-black-ter is-size-6">Nodejs第十三课</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/nodejs/">nodejs</a> / <a class="has-link-grey -link" href="/categories/nodejs/lesson/">lesson</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2015/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2015</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2015/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2015</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2015/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2015</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2015/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2015</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">15</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2015/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2015</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">11</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <ul class="menu-list">
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/AngularJS/">
+                        <span class="level-start">
+                            <span class="level-item">AngularJS</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/FFmpeg/">
+                        <span class="level-start">
+                            <span class="level-item">FFmpeg</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/HelloWorld/">
+                        <span class="level-start">
+                            <span class="level-item">HelloWorld</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Hexo/">
+                        <span class="level-start">
+                            <span class="level-item">Hexo</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">3</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Java/">
+                        <span class="level-start">
+                            <span class="level-item">Java</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Javascript/">
+                        <span class="level-start">
+                            <span class="level-item">Javascript</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/ReactiveCocoa/">
+                        <span class="level-start">
+                            <span class="level-item">ReactiveCocoa</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Redis/">
+                        <span class="level-start">
+                            <span class="level-item">Redis</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Shell/">
+                        <span class="level-start">
+                            <span class="level-item">Shell</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">2</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/UIDynamic/">
+                        <span class="level-start">
+                            <span class="level-item">UIDynamic</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/URLencode/">
+                        <span class="level-start">
+                            <span class="level-item">URLencode</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/const/">
+                        <span class="level-start">
+                            <span class="level-item">const</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/exports/">
+                        <span class="level-start">
+                            <span class="level-item">exports</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/express/">
+                        <span class="level-start">
+                            <span class="level-item">express</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/github/">
+                        <span class="level-start">
+                            <span class="level-item">github</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/hadoop/">
+                        <span class="level-start">
+                            <span class="level-item">hadoop</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/iOS/">
+                        <span class="level-start">
+                            <span class="level-item">iOS</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/lesson/">
+                        <span class="level-start">
+                            <span class="level-item">lesson</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">14</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/maven/">
+                        <span class="level-start">
+                            <span class="level-item">maven</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/orientation/">
+                        <span class="level-start">
+                            <span class="level-item">orientation</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/swift/">
+                        <span class="level-start">
+                            <span class="level-item">swift</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/view/">
+                        <span class="level-start">
+                            <span class="level-item">view</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/yaml/">
+                        <span class="level-start">
+                            <span class="level-item">yaml</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/数组名/">
+                        <span class="level-start">
+                            <span class="level-item">数组名</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/正则表达式/">
+                        <span class="level-start">
+                            <span class="level-item">正则表达式</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/百度地图/">
+                        <span class="level-start">
+                            <span class="level-item">百度地图</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2018/11/30/FFmpeg-iOS环境下编译-md/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="FFmpeg-iOS环境下编译">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-30T07:27:38.000Z">2018-11-30</time></div>
+                    <a href="/2018/11/30/FFmpeg-iOS环境下编译-md/" class="has-link-black-ter is-size-6">FFmpeg-iOS环境下编译</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/FFmpeg/">FFmpeg</a> / <a class="has-link-grey -link" href="/categories/FFmpeg/iOS/">iOS</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2015/11/27/NSUrlSession-Study/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="NSUrlSession-Study">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2015-11-27T04:27:56.000Z">2015-11-27</time></div>
+                    <a href="/2015/11/27/NSUrlSession-Study/" class="has-link-black-ter is-size-6">NSUrlSession-Study</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/NSUrlSession/">NSUrlSession</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2015/11/17/Java-Socket-Object/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Java Socket中的ObjectOutputStream和ObjectInputStream">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2015-11-17T09:16:14.000Z">2015-11-17</time></div>
+                    <a href="/2015/11/17/Java-Socket-Object/" class="has-link-black-ter is-size-6">Java Socket中的ObjectOutputStream和ObjectInputStream</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/Java/">Java</a> / <a class="has-link-grey -link" href="/categories/Java/Socket/">Socket</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2015/11/04/view和layer缠绵/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="view和layer缠绵">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2015-11-04T07:16:14.000Z">2015-11-04</time></div>
+                    <a href="/2015/11/04/view和layer缠绵/" class="has-link-black-ter is-size-6">view和layer缠绵</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/categories/iOS/view/">view</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2015/10/16/nodejs-lesson13/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/images/thumbnail.svg" alt="Nodejs第十三课">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2015-10-16T03:00:18.000Z">2015-10-16</time></div>
+                    <a href="/2015/10/16/nodejs-lesson13/" class="has-link-black-ter is-size-6">Nodejs第十三课</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/nodejs/">nodejs</a> / <a class="has-link-grey -link" href="/categories/nodejs/lesson/">lesson</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2015/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2015</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2015/10/">
+                <span class="level-start">
+                    <span class="level-item">十月 2015</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2015/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2015</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">10</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2015/08/">
+                <span class="level-start">
+                    <span class="level-item">八月 2015</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">15</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2015/07/">
+                <span class="level-start">
+                    <span class="level-item">七月 2015</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">11</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <ul class="menu-list">
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/AngularJS/">
+                        <span class="level-start">
+                            <span class="level-item">AngularJS</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/FFmpeg/">
+                        <span class="level-start">
+                            <span class="level-item">FFmpeg</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/HelloWorld/">
+                        <span class="level-start">
+                            <span class="level-item">HelloWorld</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Hexo/">
+                        <span class="level-start">
+                            <span class="level-item">Hexo</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">3</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Java/">
+                        <span class="level-start">
+                            <span class="level-item">Java</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Javascript/">
+                        <span class="level-start">
+                            <span class="level-item">Javascript</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/ReactiveCocoa/">
+                        <span class="level-start">
+                            <span class="level-item">ReactiveCocoa</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Redis/">
+                        <span class="level-start">
+                            <span class="level-item">Redis</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Shell/">
+                        <span class="level-start">
+                            <span class="level-item">Shell</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">2</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/UIDynamic/">
+                        <span class="level-start">
+                            <span class="level-item">UIDynamic</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/URLencode/">
+                        <span class="level-start">
+                            <span class="level-item">URLencode</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/const/">
+                        <span class="level-start">
+                            <span class="level-item">const</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/exports/">
+                        <span class="level-start">
+                            <span class="level-item">exports</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/express/">
+                        <span class="level-start">
+                            <span class="level-item">express</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/github/">
+                        <span class="level-start">
+                            <span class="level-item">github</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/hadoop/">
+                        <span class="level-start">
+                            <span class="level-item">hadoop</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/iOS/">
+                        <span class="level-start">
+                            <span class="level-item">iOS</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/lesson/">
+                        <span class="level-start">
+                            <span class="level-item">lesson</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">14</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/maven/">
+                        <span class="level-start">
+                            <span class="level-item">maven</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/orientation/">
+                        <span class="level-start">
+                            <span class="level-item">orientation</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/swift/">
+                        <span class="level-start">
+                            <span class="level-item">swift</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/view/">
+                        <span class="level-start">
+                            <span class="level-item">view</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/yaml/">
+                        <span class="level-start">
+                            <span class="level-item">yaml</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/数组名/">
+                        <span class="level-start">
+                            <span class="level-item">数组名</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/正则表达式/">
+                        <span class="level-start">
+                            <span class="level-item">正则表达式</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/百度地图/">
+                        <span class="level-start">
+                            <span class="level-item">百度地图</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.png" alt="Nodejs第八课" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2018 Meone&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a>
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/yutiya">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
