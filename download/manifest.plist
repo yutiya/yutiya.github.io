@@ -33,15 +33,15 @@
         <key>metadata</key>
         <dict>
           <key>bundle-identifier</key>
-          <string>com.zqxq.tttcapp</string>
+          <string>com.meone.enter</string>
           <key>bundle-version</key>
-          <string>1.0.8</string>
+          <string>1.0.0</string>
           <key>kind</key>
           <string>software</string>
           <key>subtitle</key>
           <string></string>
           <key>title</key>
-          <string>天天趣玩</string>
+          <string>Enter</string>
         </dict>
       </dict>
     </array>
