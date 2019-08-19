@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yutiya.github.io/images/iOS/OCANDSwift/7.png">
 <meta property="og:image" content="http://yutiya.github.io/images/iOS/OCANDSwift/8.png">
 <meta property="og:image" content="http://yutiya.github.io/images/iOS/OCANDSwift/9.png">
-<meta property="og:updated_time" content="2018-12-12T03:20:07.859Z">
+<meta property="og:updated_time" content="2019-05-28T03:00:12.278Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift和OC混编">
 <meta name="twitter:description" content="Swift和OC混编Swift语言,抱歉,博主会的不多,今天来简单的讲解一下OC与Swift的混编做得不多,我们只要做到能相互调用就好了就做世界上最伟大的程序Hello World">
@@ -39,7 +39,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://fonts.font.im/css?family=Ubuntu:400,600|Source+Code+Pro">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
 
 
@@ -170,14 +170,14 @@
             <h2 id="Swift和OC混编"><a href="#Swift和OC混编" class="headerlink" title="Swift和OC混编"></a>Swift和OC混编</h2><p>Swift语言,抱歉,博主会的不多,今天来简单的讲解一下OC与Swift的混编<br>做得不多,我们只要做到能相互调用就好了<br>就做世界上最伟大的程序<code>Hello World</code></p>
 <a id="more"></a>
 <p>打开Xcode:    </p>
-<p><img src="/images/iOS/OCANDSwift/1.png" alt=""></p>
+<p><img src="/images/iOS/OCANDSwift/1.png" alt></p>
 <p>来个简单的命令行”Hello World”:    </p>
-<p><img src="/images/iOS/OCANDSwift/2.png" alt=""></p>
-<p><img src="/images/iOS/OCANDSwift/3.png" alt=""></p>
+<p><img src="/images/iOS/OCANDSwift/2.png" alt></p>
+<p><img src="/images/iOS/OCANDSwift/3.png" alt></p>
 <p>新建一个OC类:    </p>
-<p><img src="/images/iOS/OCANDSwift/4.png" alt=""></p>
+<p><img src="/images/iOS/OCANDSwift/4.png" alt></p>
 <p>YES Xcode自动帮我们创建桥接swift和OC的头文件:</p>
-<p><img src="/images/iOS/OCANDSwift/5.png" alt=""></p>
+<p><img src="/images/iOS/OCANDSwift/5.png" alt></p>
 <p><strong>开始写点代码叭</strong>:     </p>
 <p>HelloOC.h:    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">@interface HelloOC : NSObject</span><br><span class="line"></span><br><span class="line">- (void)sayHelloWorld;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
@@ -188,14 +188,14 @@
 <p>main.swift:     </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import Foundation</span><br><span class="line"></span><br><span class="line">var hello = HelloOC()</span><br><span class="line">hello.sayHelloWorld()</span><br></pre></td></tr></table></figure>
 <p>来看看目录结构,运行,没有问题</p>
-<p><img src="/images/iOS/OCANDSwift/6.png" alt=""></p>
+<p><img src="/images/iOS/OCANDSwift/6.png" alt></p>
 <p>新建一个Swift类,用于在OC类中调用:    </p>
-<p><img src="/images/iOS/OCANDSwift/7.png" alt=""></p>
+<p><img src="/images/iOS/OCANDSwift/7.png" alt></p>
 <p>HelloSwift.swift:     </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import Foundation</span><br><span class="line"></span><br><span class="line">class HelloSwift: NSObject &#123;</span><br><span class="line">    </span><br><span class="line">    func sayHello()</span><br><span class="line">    &#123;</span><br><span class="line">        println(&quot;Swift Hello&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>OC调用swift会生成一个隐藏的头文件,头文件名称为<code>项目名-Swift.h</code><br><code>#import &quot;OCSwift-Swift.h&quot;</code>导入</p>
 <p>如果在<code>HelloOC.h</code>中导入该头文件会报错     </p>
-<p><img src="/images/iOS/OCANDSwift/8.png" alt=""></p>
+<p><img src="/images/iOS/OCANDSwift/8.png" alt></p>
 <p>在h文件中改使用<code>@class 类名;</code>引入</p>
 <p>HelloOC.h:    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line">@class HelloSwift;</span><br><span class="line"></span><br><span class="line">@interface HelloOC : NSObject</span><br><span class="line">&#123;</span><br><span class="line">    HelloSwift *swift;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)sayHelloWorld;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
@@ -203,7 +203,7 @@
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;HelloOC.h&quot;</span><br><span class="line">#import &quot;OCSwift-Swift.h&quot;</span><br><span class="line"></span><br><span class="line">@implementation HelloOC</span><br><span class="line"></span><br><span class="line">- (id)init</span><br><span class="line">&#123;</span><br><span class="line">    if (self = [super init]) &#123;</span><br><span class="line">        swift = [[HelloSwift alloc] init];</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)sayHelloWorld</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;Hello World!&quot;);</span><br><span class="line">    [swift sayHello];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
 <p>运行,没错,这样混编就搞定了     </p>
 <p>另外,该桥接的头文件,在这里配置,可以自己创建该头文件并导入     </p>
-<p><img src="/images/iOS/OCANDSwift/9.png" alt=""></p>
+<p><img src="/images/iOS/OCANDSwift/9.png" alt></p>
 <p>该配置指向该头文件</p>
 
         </div>
@@ -1749,7 +1749,7 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2018 Meone&nbsp;
+                &copy; 2019 Meone&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a>
                 </p>
             </div>

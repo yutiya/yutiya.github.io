@@ -17,7 +17,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yutiya.github.io/images/nodejs/lesson13/1.png">
 <meta property="og:image" content="http://yutiya.github.io/images/nodejs/lesson13/2.png">
-<meta property="og:updated_time" content="2018-12-12T03:20:07.862Z">
+<meta property="og:updated_time" content="2019-05-28T03:00:12.281Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nodejs第十三课">
 <meta name="twitter:description" content="持续集成平台:travis知识点 学习使用travis-ci对项目进行持续集成测试(https://travis-ci.org/)  课程内容首先来瞅瞅这个项目: https://github.com/Ricardo-Li/node-practice-3(项目已失效,自己随便写一个叭)我们是学习噢,不是抄袭别人的噢,好记性不如烂笔头嘛">
@@ -32,7 +32,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://fonts.font.im/css?family=Ubuntu:400,600|Source+Code+Pro">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
 
 
@@ -165,14 +165,14 @@
 </ul>
 <h3 id="课程内容"><a href="#课程内容" class="headerlink" title="课程内容"></a>课程内容</h3><p>首先来瞅瞅这个项目: <a href="https://github.com/Ricardo-Li/node-practice-3(项目已失效,自己随便写一个叭)" target="_blank" rel="noopener">https://github.com/Ricardo-Li/node-practice-3(项目已失效,自己随便写一个叭)</a><br>我们是学习噢,不是抄袭别人的噢,好记性不如烂笔头嘛    </p>
 <a id="more"></a>
-<p><img src="/images/nodejs/lesson13/1.png" alt=""></p>
+<p><img src="/images/nodejs/lesson13/1.png" alt></p>
 <p>类似这样的badges(徽章),在很多开源项目中都可以看到.前者是告诉我们,该项目目前测试是通过的;后者是告诉我们,这个测试的行覆盖率是多少.行覆盖率当然是越多越好,很重要.<br>使用travis平台,因为它可以让你明白自己的项目在一个”空白环境”中,是否能够正确运行;也可以测试项目在不同的Node.js版本下运行,有没有兼容行问题.<br>当在自己的机器上开发测试的时候,一般使用特定的Node.js版本,测试过了,需要手动切换版本再测试,相对比较繁琐.所以选择travis帮你把项目在不同的Node.js版本下运行.也可以在我们安装依赖,忘记写入package.json的时候,及时发现.    </p>
 <p>travis的虚拟机技术玩得很6,每次测试都是新的环境,环境中只有Linux最基本的依赖.<code>build-essential</code>、<code>wget</code>、<code>git</code>等.<code>Node.js</code>运行时都是即时安装的.    </p>
 <p>travis默认的依赖对于每个用户都一样,所以你要你在上边测试通过,你就不用担心别的用户安装不上了     </p>
 <p>原文地址: <a href="https://github.com/alsotang/node-lessons/tree/master/lesson13" target="_blank" rel="noopener">https://github.com/alsotang/node-lessons/tree/master/lesson13</a>    </p>
 <p>官网: <a href="https://travis-ci.org/" target="_blank" rel="noopener">https://travis-ci.org/</a>     </p>
 <p>授权使用github账户进行登录,然后克隆你仓库中的某个项目来进行平台测试    </p>
-<p><img src="/images/nodejs/lesson13/2.png" alt="">    </p>
+<p><img src="/images/nodejs/lesson13/2.png" alt>    </p>
 <p>在项目根目录中配置<code>.travis.yml</code>,告知平台怎么运行改项目     </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">language: node_js</span><br><span class="line">node_js:</span><br><span class="line">- &apos;0.8&apos;</span><br><span class="line">- &apos;0.10&apos;</span><br><span class="line">- &apos;0.11&apos;</span><br><span class="line"></span><br><span class="line">script: make test</span><br></pre></td></tr></table></figure>
 <p>这个文件描述的信息是:    </p>
@@ -1732,7 +1732,7 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2018 Meone&nbsp;
+                &copy; 2019 Meone&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a>
                 </p>
             </div>

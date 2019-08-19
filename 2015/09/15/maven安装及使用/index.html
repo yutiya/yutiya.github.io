@@ -17,7 +17,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yutiya.github.io/images/java/maven/lesson/1.png">
 <meta property="og:image" content="http://yutiya.github.io/images/java/maven/lesson/2.png">
-<meta property="og:updated_time" content="2018-12-12T03:20:07.861Z">
+<meta property="og:updated_time" content="2019-05-28T03:00:12.280Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="maven的安装及使用">
 <meta name="twitter:description" content="maven的安装及使用目标 安装 使用maven搞定HelloWorld 一些构建命令  安装下载地址: http://maven.apache.org/download.cgi">
@@ -32,7 +32,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://fonts.font.im/css?family=Ubuntu:400,600|Source+Code+Pro">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
 
 
@@ -167,9 +167,9 @@
 </ul>
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>下载地址: <a href="http://maven.apache.org/download.cgi" target="_blank" rel="noopener">http://maven.apache.org/download.cgi</a>    </p>
 <a id="more"></a>
-<p><img src="/images/java/maven/lesson/1.png" alt=""></p>
+<p><img src="/images/java/maven/lesson/1.png" alt></p>
 <p>而选其一进行下载.解压.放置到一个你喜欢的文件夹,切记不要删除.配置环境<br>确保在系统环境变量中配置了<code>JAVA_HOME</code>的键值,然后再添加一个<code>MAVEN_HOME</code><br>配置系统全局的,<code>sudo vi /etc/profile</code>,在后面加入内容即可,不要输入错了,否则臣妾真的救不了你噢</p>
-<p><img src="/images/java/maven/lesson/2.png" alt=""></p>
+<p><img src="/images/java/maven/lesson/2.png" alt></p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home   ## MAC下,jdk就在这个目录,linux安装配置请百度谷歌</span><br><span class="line"></span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line"></span><br><span class="line">MAVEN_HOME=/usr/local/maven/maven-3.3.3     ## 这里是我解压存放的路径</span><br><span class="line"></span><br><span class="line">export PATH=$MAVEN_HOME/bin:$PATH</span><br><span class="line"></span><br><span class="line">export JAVA_HOME        ## 该键不仅需要加入PATH(用于终端使用java命令),maven也会使用,不加入,你会一直呵呵的</span><br><span class="line"></span><br><span class="line">export MAVEN_HOME</span><br></pre></td></tr></table></figure>
 <p>使用<code>mvn -v</code>来测试是否安装成功.    </p>
 <h3 id="使用maven搞定HelloWorld"><a href="#使用maven搞定HelloWorld" class="headerlink" title="使用maven搞定HelloWorld"></a>使用maven搞定HelloWorld</h3><p>先来说说我们的文件夹格式    </p>
@@ -1795,7 +1795,7 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2018 Meone&nbsp;
+                &copy; 2019 Meone&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a>
                 </p>
             </div>

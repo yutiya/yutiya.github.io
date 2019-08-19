@@ -28,7 +28,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://fonts.font.im/css?family=Ubuntu:400,600|Source+Code+Pro">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
 
 
@@ -179,14 +179,14 @@
 <p>Podfile文件内容:    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">platform :ios, &apos;7.0&apos;</span><br><span class="line"></span><br><span class="line">pod &apos;ReactiveCocoa&apos;, &apos;2.1.8&apos;</span><br></pre></td></tr></table></figure>
 <p>运行<code>$ pod install</code></p>
-<p><img src="/images/iOS/reactivecocoa/1.png" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/1.png" alt></p>
 <p>安装完成后使用xcworkspace文件打开项目    </p>
 <p>在<strong>RWViewController.m</strong>文件    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;ReactiveCocoa/ReactiveCocoa.h&gt;</span><br></pre></td></tr></table></figure>
 <p>在viewDidLoad中添加代码    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[self.usernameTextField.rac_textSignal subscribeNext:^(id x) &#123;</span><br><span class="line">    NSLog(@&quot;%@&quot;, x);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
 <p>现在我们就能体验到信号编程了    </p>
-<p><img src="/images/iOS/reactivecocoa/2.png" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/2.png" alt></p>
         </div>
         
         
@@ -1710,7 +1710,7 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2018 Meone&nbsp;
+                &copy; 2019 Meone&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a>
                 </p>
             </div>

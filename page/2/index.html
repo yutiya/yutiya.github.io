@@ -28,7 +28,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://fonts.font.im/css?family=Ubuntu:400,600|Source+Code+Pro">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
 
 
@@ -435,7 +435,7 @@
 <li>理解this的指向</li>
 </ul>
 <h3 id="课程内容"><a href="#课程内容" class="headerlink" title="课程内容"></a>课程内容</h3><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">var parent = function () &#123;</span><br><span class="line">    var name = &quot;parent_name&quot;;</span><br><span class="line">    var age = 13;</span><br><span class="line"></span><br><span class="line">    var child = function () &#123;</span><br><span class="line">        var name = &quot;child_name&quot;;</span><br><span class="line">        var childAge = 0.3;</span><br><span class="line"></span><br><span class="line">        console.log(name, age, childAge);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    child();</span><br><span class="line"></span><br><span class="line">    console.log(name, age, childAge);</span><br><span class="line">&#125;;</span><br><span class="line">parent();</span><br></pre></td></tr></table></figure>
-<p><img src="/images/nodejs/lesson11/1.png" alt="">    </p>
+<p><img src="/images/nodejs/lesson11/1.png" alt>    </p>
 <p>学过一点别的编程语言肯定都会直觉的认为,内部函数可以访问外部函数的变量,外部不能访问内部函数的变量.因此childAge在parent中会报错.如果声明变量是少了var,就声明就全局变量了.<br>在Nodejs中,全局变量会被定义在global对象下,在浏览器中,全局变量会被定义在window下.<br>如果需要定义全局变量,请显示的定义在global或window对象上.    </p>
         </div>
         
@@ -763,11 +763,11 @@
 <li>Landscape Right</li>
 </ul>
 <p>不然只会支持你所选择的方向(那就没得玩了)<br>然后再Main.storyboard中拖入一个按钮,放到左上角一些,why?因为不在界面上放个东西,改变方向你会晕的<br>现在run,手动改变方向<code>command+⬅️</code>,效果给你个截图    </p>
-<p><img src="/images/iOS/screenOrientation/1.gif" alt=""></p>
+<p><img src="/images/iOS/screenOrientation/1.gif" alt></p>
 <p>可以看到屏幕的方向会随着设备的方向而改变,Landscape Left(顺时针转,home键在左),如果用户锁定了屏幕旋转,那就不用讨论设备转向的情况下屏幕跟随转向的问题了        </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//file ViewController.m</span><br><span class="line">...</span><br><span class="line">- (BOOL)shouldAutorotate</span><br><span class="line">&#123;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <p>显而易见的,这个方法控制我们的页面是否跟随设备转动而改变方向    </p>
-<p><img src="/images/iOS/screenOrientation/2.gif" alt=""></p>
+<p><img src="/images/iOS/screenOrientation/2.gif" alt></p>
         </div>
         
         
@@ -2316,7 +2316,7 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2018 Meone&nbsp;
+                &copy; 2019 Meone&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a>
                 </p>
             </div>

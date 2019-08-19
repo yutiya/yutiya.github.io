@@ -16,7 +16,7 @@
 <meta property="og:description" content="benchmaek怎么写目标有一个字符串var number = &amp;#39;100&amp;#39;,我们要将它转换成Number类型的100三个选项: + , parseInt, Number测试哪种方法更快     知识点 学习使用benchmark库 学习使用 http://jsperf.com/ 分享你的benchmark  课程内容首先得有一个benchmark库, https://github">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yutiya.github.io/images/nodejs/lesson10/1.png">
-<meta property="og:updated_time" content="2018-12-12T03:20:07.862Z">
+<meta property="og:updated_time" content="2019-05-28T03:00:12.281Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nodejs第十课">
 <meta name="twitter:description" content="benchmaek怎么写目标有一个字符串var number = &amp;#39;100&amp;#39;,我们要将它转换成Number类型的100三个选项: + , parseInt, Number测试哪种方法更快     知识点 学习使用benchmark库 学习使用 http://jsperf.com/ 分享你的benchmark  课程内容首先得有一个benchmark库, https://github">
@@ -31,7 +31,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://fonts.font.im/css?family=Ubuntu:400,600|Source+Code+Pro">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
 
 
@@ -168,7 +168,7 @@
 <a id="more"></a>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">var int1 = function (str) &#123;</span><br><span class="line">    return +str;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">var int2 = function (str) &#123;</span><br><span class="line">    return parseInt(str, 10);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">var int3 = function (str) &#123;</span><br><span class="line">    return Number(str);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">var Benchmark = require(&apos;benchmark&apos;);</span><br><span class="line">var suite = new Benchmark.Suite;</span><br><span class="line"></span><br><span class="line">var number = &apos;100&apos;;</span><br><span class="line"></span><br><span class="line">suite</span><br><span class="line">    .add(&apos;+&apos;, function()&#123;</span><br><span class="line">        int1(number);</span><br><span class="line">    &#125;)</span><br><span class="line">    .add(&apos;parseInt&apos;, function()&#123;</span><br><span class="line">        int2(number);</span><br><span class="line">    &#125;)</span><br><span class="line">    .add(&apos;Number&apos;, function()&#123;</span><br><span class="line">        int3(number);</span><br><span class="line">    &#125;)</span><br><span class="line">    //每个测试完成后,输出</span><br><span class="line">    .on(&apos;cycle&apos;, function(event)&#123;</span><br><span class="line">        console.log(String(event.target));</span><br><span class="line">    &#125;)</span><br><span class="line">    .on(&apos;complete&apos;, function()&#123;</span><br><span class="line">        console.log(&apos;Fastest is &apos; + this.filter(&apos;fastest&apos;).pluck(&apos;name&apos;));</span><br><span class="line">    &#125;)</span><br><span class="line">    //默认勾选async</span><br><span class="line">    .run(&#123; &apos;async&apos; : true &#125;);</span><br></pre></td></tr></table></figure>
 <p>我们实现了三个函数,然后添加测试    </p>
-<p><img src="/images/nodejs/lesson10/1.png" alt=""></p>
+<p><img src="/images/nodejs/lesson10/1.png" alt></p>
 <h3 id="在线分享"><a href="#在线分享" class="headerlink" title="在线分享"></a>在线分享</h3><p>如果需要在线分享你的js benchmark,进入这个网站: <a href="http://jsperf.com/" target="_blank" rel="noopener">http://jsperf.com/</a> .<br>比如alsotang分享的 <a href="http://jsperf.com/math-perf-alsotang" target="_blank" rel="noopener">http://jsperf.com/math-perf-alsotang</a>    </p>
 
         </div>
@@ -1714,7 +1714,7 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2018 Meone&nbsp;
+                &copy; 2019 Meone&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a>
                 </p>
             </div>

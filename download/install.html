@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=480">
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<link rel="apple-touch-icon" href="https://yutiya.github.io/download/LotteryApp-Icon.png" />
+<link rel="apple-touch-icon" href="https://www.meone.site/download/LotteryApp-Icon.png" />
 <style type="text/css">
 .link {
 	background:#ccc;
@@ -39,10 +39,19 @@
 	color:#666;
 }
 </style>
+<script type="text/javascript">
+function installApp(){
+    if(window.navigator.standalone){ // from Home Screen Icon
+        // tap Install Button by script
+        var event = document.createEvent("MouseEvents");
+        event.initEvent("click", true, true);
+        document.getElementById("install").dispatchEvent(event);
+    }
+}
 </script>
 </head>
-<body>
-<div class="link"><a id="install" href="itms-services://?action=download-manifest&url=https://down.wbvip188.com/manifest.plist">安装</a></div>
+<body onLoad="installApp();">
+<div class="link"><a id="install" href="itms-services://?action=download-manifest&url=https://www.meone.site/download/manifest.plist">安装</a></div>
 <div class="guide">点击<b>Home</b>键查看桌面图标</div>
 </body>
 </html>

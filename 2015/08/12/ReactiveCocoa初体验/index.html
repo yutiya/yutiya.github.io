@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://yutiya.github.io/images/iOS/reactivecocoa/r1.gif">
 <meta property="og:image" content="http://yutiya.github.io/images/iOS/reactivecocoa/l6.png">
 <meta property="og:image" content="http://yutiya.github.io/images/iOS/reactivecocoa/r2.gif">
-<meta property="og:updated_time" content="2018-12-12T03:20:07.859Z">
+<meta property="og:updated_time" content="2019-05-28T03:00:12.278Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ReactiveCocoa初体验">
 <meta name="twitter:description" content="Reactive的学习和使用 原文链接:http://www.raywenderlich.com/62699/reactivecocoa-tutorial-pt1     下载起始项目:start project     删除测试target,用不上,这样项目便不会报错 在xcodeproj同级目录下创建文件Podfile,使用CocoaPods安装Reactive库  Podfile文件内容:">
@@ -47,7 +47,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://fonts.font.im/css?family=Ubuntu:400,600|Source+Code+Pro">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
 
 
@@ -184,20 +184,20 @@
 <p>Podfile文件内容:    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">platform :ios, &apos;7.0&apos;</span><br><span class="line"></span><br><span class="line">pod &apos;ReactiveCocoa&apos;, &apos;2.1.8&apos;</span><br></pre></td></tr></table></figure>
 <p>运行<code>$ pod install</code></p>
-<p><img src="/images/iOS/reactivecocoa/1.png" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/1.png" alt></p>
 <p>安装完成后使用xcworkspace文件打开项目    </p>
 <p>在<strong>RWViewController.m</strong>文件    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#import &lt;ReactiveCocoa/ReactiveCocoa.h&gt;</span><br></pre></td></tr></table></figure>
 <p>在viewDidLoad中添加代码    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[self.usernameTextField.rac_textSignal subscribeNext:^(id x) &#123;</span><br><span class="line">    NSLog(@&quot;%@&quot;, x);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
 <p>现在我们就能体验到信号编程了    </p>
-<p><img src="/images/iOS/reactivecocoa/2.png" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/2.png" alt></p>
 <a id="more"></a>
 <p>可以看到我们每次输出一个字符都会产生一个信号,这大概就是信号编程吧<br>我们看看信号传递流程    </p>
-<p><img src="/images/iOS/reactivecocoa/l1.png" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/l1.png" alt></p>
 <p>现在我们将添加的代码修改一下    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[[self.usernameTextField.rac_textSignal filter:^BOOL(id value) &#123;</span><br><span class="line">    NSString *text = value;</span><br><span class="line">    return text.length &gt; 3;</span><br><span class="line">&#125;] subscribeNext:^(id x) &#123;</span><br><span class="line">    NSLog(@&quot;%@&quot;, x);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-<p><img src="/images/iOS/reactivecocoa/3.png" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/3.png" alt></p>
 <p>我们可以看到,当满足filter的条件之后,才会产生信号,后面的条件才会继续执行,有一种链式操作的感觉<br>我们将上面的代码的完整结构    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *usernameSoucesSignal = self.usernameTextField.rac_textSignal;</span><br><span class="line">RACSignal *filteredUsername = [usernameSoucesSignal filter:^BOOL(id value) &#123;</span><br><span class="line">    NSString *text = value;</span><br><span class="line">    return text.length &gt; 3;</span><br><span class="line">&#125;];</span><br><span class="line">[filteredUsername subscribeNext:^(id x) &#123;</span><br><span class="line">    NSLog(@&quot;%@&quot;, x);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
 <p>可以看出来,每次文本框内容的改变就会产生一个信号对象,调用信号处理的block,得到结果<br>很显然,我们更喜欢上面那种简洁的语法    </p>
@@ -205,12 +205,12 @@
 <li>现在让我们更进一步,看看到底发生了写什么:</li>
 </ul>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> [[[self.usernameTextField.rac_textSignal map:^id(id value) &#123;</span><br><span class="line">    NSString *text = value;</span><br><span class="line">    return @(text.length);</span><br><span class="line">&#125;] filter:^BOOL(id value) &#123;</span><br><span class="line">    NSNumber *length = value;</span><br><span class="line">    return [length integerValue] &gt; 3;</span><br><span class="line">&#125;] subscribeNext:^(id x) &#123;</span><br><span class="line">    NSLog(@&quot;%@&quot;, x);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-<p><img src="/images/iOS/reactivecocoa/4.png" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/4.png" alt></p>
 <p>信号传递流程    </p>
-<p><img src="/images/iOS/reactivecocoa/l2.png" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/l2.png" alt></p>
 <p>我比较笨,假设你跟我一样,并没有发现有什么问题,现在我们再改改代码:</p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> [[[self.usernameTextField.rac_textSignal map:^id(id value) &#123;</span><br><span class="line">    NSString *text = value;</span><br><span class="line">    return text;</span><br><span class="line">&#125;] filter:^BOOL(id value) &#123;</span><br><span class="line">    NSString *text = value;</span><br><span class="line">    return text.length &gt; 3;</span><br><span class="line">&#125;] subscribeNext:^(id x) &#123;</span><br><span class="line">    NSLog(@&quot;%@&quot;, x);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-<p><img src="/images/iOS/reactivecocoa/5.png" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/5.png" alt></p>
 <p>这下能看懂了吧,map解析字符串然后向下传递,filter通过返回YES来过滤字符串,subscribeNext得到过滤后的字符串,如果没有满足过滤条件,信号将不会向下传递,能理解信号传递的思路了么    </p>
 <ul>
 <li>创建验证状态信号</li>
@@ -223,18 +223,18 @@
 <p>可以看到代码,我们将文本框和背景颜色绑定为一个信号处理,当验证信号解析后将自动设置<br>我们来看看通常我们一般这样写    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">self.usernameTextField.backgroundColor = self.usernameIsValid ? [UIColor clearColor] : [UIColor yellowColor];</span><br><span class="line">self.passwordTextField.backgroundColor = self.passwordIsValid ? [UIColor clearColor] : [UIColor yellowColor];</span><br></pre></td></tr></table></figure>
 <p>这个能看懂吧,平常我们是这样写的,只是改变了编程方式,有一种链式操作的感觉,能将信号绑定处理,其实还不错<br>信号传递流程是这样的   </p>
-<p><img src="/images/iOS/reactivecocoa/l3.png" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/l3.png" alt></p>
 <ul>
 <li>组合信号</li>
 </ul>
 <p>在viewDidLoad添加代码:</p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *signUpActiveSignal = [RACSignal combineLatest:@[validUsernameSignal, validPasswordSignal] reduce:^id(NSNumber *usernameValid, NSNumber *passwordValid)&#123;</span><br><span class="line">    return @([usernameValid boolValue] &amp;&amp; [passwordValid boolValue]);</span><br><span class="line">&#125;];</span><br><span class="line"></span><br><span class="line">[signUpActiveSignal subscribeNext:^(NSNumber *signupActive) &#123;</span><br><span class="line">    self.signInButton.enabled = [signupActive boolValue];</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
 <p>将两个信号组合生成一个新的信号进行解析处理    </p>
-<p><img src="/images/iOS/reactivecocoa/6.png" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/6.png" alt></p>
 <p>我们这样修改后,就可以移除下面的这些无用的代码了        </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@property (nonatomic) BOOL passwordIsValid;</span><br><span class="line">@property (nonatomic) BOOL usernameIsValid;</span><br><span class="line"></span><br><span class="line">// handle text changes for both text fields</span><br><span class="line">[self.usernameTextField addTarget:self</span><br><span class="line">                         action:@selector(usernameTextFieldChanged)</span><br><span class="line">               forControlEvents:UIControlEventEditingChanged];</span><br><span class="line">[self.passwordTextField addTarget:self </span><br><span class="line">                         action:@selector(passwordTextFieldChanged)</span><br><span class="line">               forControlEvents:UIControlEventEditingChanged];</span><br></pre></td></tr></table></figure>
 <p>同时可以移除<code>updateUIState</code>,<code>usernameTextFieldChanged</code>和<code>passwdTextFieldChanged</code>方法等并删除多余的代码<br>现在的信号传递流程是这样的    </p>
-<p><img src="/images/iOS/reactivecocoa/l4.png" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/l4.png" alt></p>
 <p>现在代码是不是更简洁,更方便</p>
 <ul>
 <li>下一步,将其余的业务逻辑也使用信号处理</li>
@@ -242,24 +242,24 @@
 <p>打开<code>Main.storyboard</code>,删除绑定的<code>sign up</code>按钮事件<br>继续在viewDidLoad中添加事件    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[self.signInButton rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(id x) &#123;</span><br><span class="line">    NSLog(@&quot;button clicked&quot;);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
 <p>可以看到下面的效果,事件也可以绑定为信号,感觉好6</p>
-<p><img src="/images/iOS/reactivecocoa/7.png" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/7.png" alt></p>
 <p>现在我们可以移除<code>signInButtonTouched:</code>事件,并创建信号<br>增加一个方法    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (RACSignal *)signInSingal</span><br><span class="line">&#123;</span><br><span class="line">    return [RACSignal createSignal:^RACDisposable *(id&lt;RACSubscriber&gt; subscriber) &#123;</span><br><span class="line">       [self.signInService signInWithUsername:self.usernameTextField.text password:self.passwordTextField.text complete:^(BOOL success) &#123;</span><br><span class="line">           [subscriber sendNext:@(success)];</span><br><span class="line">           [subscriber sendCompleted];</span><br><span class="line">       &#125;];</span><br><span class="line">        return nil;</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在viewDidLoad中添加代码    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[[[self.signInButton rac_signalForControlEvents:UIControlEventTouchUpInside] map:^id(id value) &#123;</span><br><span class="line">    return [self signInSingal];</span><br><span class="line">&#125;] subscribeNext:^(id x) &#123;</span><br><span class="line">    NSLog(@&quot;Singal in result %@&quot;, x);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-<p><img src="/images/iOS/reactivecocoa/8.png" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/8.png" alt></p>
 <p>信号传递流程:    </p>
-<p><img src="/images/iOS/reactivecocoa/l5.png" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/l5.png" alt></p>
 <p>下面来修改一下代码:    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[[[[self.signInButton rac_signalForControlEvents:UIControlEventTouchUpInside] map:^id(id value) &#123;</span><br><span class="line">    return [self signInSingal];</span><br><span class="line">&#125;] flattenMap:^RACStream *(id value) &#123;</span><br><span class="line">    return [self signInSingal];</span><br><span class="line">&#125;] subscribeNext:^(id x) &#123;</span><br><span class="line">    NSLog(@&quot;Sign in result %@&quot;, x);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-<p><img src="/images/iOS/reactivecocoa/9.png" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/9.png" alt></p>
 <p>当点击按钮时验证通过得到1,验证失败得到0<br>现在我们让验证通过得到1时跳转    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[[[[self.signInButton rac_signalForControlEvents:UIControlEventTouchUpInside] map:^id(id value) &#123;</span><br><span class="line">    return [self signInSingal];</span><br><span class="line">&#125;] flattenMap:^RACStream *(id value) &#123;</span><br><span class="line">    return [self signInSingal];</span><br><span class="line">&#125;] subscribeNext:^(NSNumber *signedIn) &#123;</span><br><span class="line">    BOOL success = [signedIn boolValue];</span><br><span class="line">    self.signInFailureText.hidden = success;</span><br><span class="line">    if (success) &#123;</span><br><span class="line">        [self performSegueWithIdentifier:@&quot;signInSuccess&quot; sender:self];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-<p>现在,我们就使用ReactiveCocoa替代了原来的业务处理,比较简洁,但是也比较难理解<br>效果图:<br><img src="/images/iOS/reactivecocoa/r1.gif" alt=""></p>
+<p>现在,我们就使用ReactiveCocoa替代了原来的业务处理,比较简洁,但是也比较难理解<br>效果图:<br><img src="/images/iOS/reactivecocoa/r1.gif" alt></p>
 <p>修改代码,在信号传递中加一个过程    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[[[[self.signInButton rac_signalForControlEvents:UIControlEventTouchUpInside] doNext:^(id x) &#123;</span><br><span class="line">    self.signInButton.enabled = NO;</span><br><span class="line">    self.signInFailureText.hidden = YES;</span><br><span class="line">&#125;] flattenMap:^RACStream *(id value) &#123;</span><br><span class="line">    return [self signInSingal];</span><br><span class="line">&#125;] subscribeNext:^(NSNumber *signedIn) &#123;</span><br><span class="line">    self.signInButton.enabled = YES;</span><br><span class="line">    BOOL success = [signedIn boolValue];</span><br><span class="line">    if(success) &#123;</span><br><span class="line">        [self performSegueWithIdentifier:@&quot;signInSuccess&quot; sender:self];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-<p><img src="/images/iOS/reactivecocoa/l6.png" alt=""></p>
-<p>再运行看看,细节更加完善<br><img src="/images/iOS/reactivecocoa/r2.gif" alt=""></p>
+<p><img src="/images/iOS/reactivecocoa/l6.png" alt></p>
+<p>再运行看看,细节更加完善<br><img src="/images/iOS/reactivecocoa/r2.gif" alt></p>
 
         </div>
         
@@ -1804,7 +1804,7 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2018 Meone&nbsp;
+                &copy; 2019 Meone&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a>
                 </p>
             </div>

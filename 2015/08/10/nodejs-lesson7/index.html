@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://yutiya.github.io/images/nodejs/lesson7/1.png">
 <meta property="og:image" content="http://yutiya.github.io/images/nodejs/lesson7/2.png">
 <meta property="og:image" content="http://yutiya.github.io/images/nodejs/lesson7/3.png">
-<meta property="og:updated_time" content="2018-12-12T03:20:07.864Z">
+<meta property="og:updated_time" content="2019-05-28T03:00:12.283Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nodejs第七课">
 <meta name="twitter:description" content="浏览器端测试: mocha、chai、phantomjs目标 建立lesson7项目,编写代码 main.js类似第六节课中提交的fibonacci函数 此函数的定义为int fibonacci(int n) 当n === 0,返回0.n === 1时,返回1 n &amp;gt; 1,返回fibonacci(n) === fibonacci(n-1) + fibonacci(n-2),如fibonacc">
@@ -33,7 +33,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://fonts.font.im/css?family=Ubuntu:400,600|Source+Code+Pro">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
 
 
@@ -196,16 +196,16 @@
 <p>test.js中写入对应的测试用例</p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var should = chai.should();</span><br><span class="line">describe(&apos;simple test&apos;, function()&#123;</span><br><span class="line">    it(&apos;should equal 0 when n === 0&apos;, function()&#123;</span><br><span class="line">        window.fibonacci(0).should.equal(0);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>使用浏览器打开index.html,完成测试    </p>
-<p><img src="/images/nodejs/lesson7/1.png" alt=""></p>
+<p><img src="/images/nodejs/lesson7/1.png" alt></p>
 <h3 id="测试反馈"><a href="#测试反馈" class="headerlink" title="测试反馈"></a>测试反馈</h3><p>mocha没有提供一个命令行的前端脚本测试环境(因为我们的脚本文件需要运行在浏览器环境中),因为我们使用phanatomjs帮助我们搭建一个模拟环境.不重复造轮子,直接使用mocha-phantomjs帮助我们在命令行运行测试    </p>
 <p>安装<code>$ sudo npm install -g mocha-phantomjs</code><br>对应修改index.html:</p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  if(window.mochaPhantomJS) &#123; mochaPhantomJS.run(); &#125;</span><br><span class="line">  else&#123; mocha.run(); &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 <p>运行<code>$ mocha-phantomjs index.html</code>查看测试结果</p>
-<p><img src="/images/nodejs/lesson7/2.png" alt=""></p>
+<p><img src="/images/nodejs/lesson7/2.png" alt></p>
 <p>也可以使用另一种方案,在package.json中定义<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    &quot;script&quot;: &#123;</span><br><span class="line">        &quot;test&quot;: &quot;./node_modules/.bin/mocha-phantomjs index.html&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>将mocha-phantomjs作为依赖<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm init</span><br><span class="line">$ npm install mocha-phantomjs --save-dev</span><br></pre></td></tr></table></figure></p>
 <p>直接运行<code>$ npm test</code>    </p>
-<p><img src="/images/nodejs/lesson7/3.png" alt=""></p>
+<p><img src="/images/nodejs/lesson7/3.png" alt></p>
 <p>至此,我们实现了前端脚本的单元测试，基于 phanatomjs 你几乎可以调用所有的浏览器方法，而 mocha-phanatomjs 也可以很便捷地将测试结果反馈到 mocha，便于后续的持续集成。</p>
 
         </div>
@@ -1751,7 +1751,7 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2018 Meone&nbsp;
+                &copy; 2019 Meone&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a>
                 </p>
             </div>

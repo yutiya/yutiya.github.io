@@ -18,7 +18,7 @@
 <meta property="og:image" content="http://yutiya.github.io/images/iOS/uidynamic/lesson/1.gif">
 <meta property="og:image" content="http://yutiya.github.io/images/iOS/uidynamic/lesson/2.gif">
 <meta property="og:image" content="http://yutiya.github.io/images/iOS/uidynamic/lesson/3.gif">
-<meta property="og:updated_time" content="2018-12-12T03:20:07.861Z">
+<meta property="og:updated_time" content="2019-05-28T03:00:12.280Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS7新特性UIDynamic">
 <meta name="twitter:description" content="iOS-UIDynamic初试UIDynamic是iOS7引入的UIKit动力学,目的是将2D物理引擎引入UIKit.最明显的就是短信界面,拖动的时候有物理效果.通常的时候我们仅使用CA和UIView的动画即可,除非我们需要引入非常逼真的交互设计的时候才使用来看看新的基本概念:      UIDynamicItem:用来描述一个力学物体的状态,其实就是实现了UIDynamicItem委托的对象,或">
@@ -33,7 +33,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://fonts.font.im/css?family=Ubuntu:400,600|Source+Code+Pro">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
 
 
@@ -172,14 +172,14 @@
 <a id="more"></a>
 <p>写段代码演示下:    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@interface ViewController ()</span><br><span class="line"></span><br><span class="line">@property (nonatomic, strong) UIDynamicAnimator *animator;</span><br><span class="line"></span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ViewController</span><br><span class="line"></span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    UIView *aView = [[UIView alloc] initWithFrame:CGRectMake(100, 50, 100, 100)];</span><br><span class="line">    aView.backgroundColor = [UIColor lightGrayColor];</span><br><span class="line">    [self.view addSubview:aView];</span><br><span class="line">    </span><br><span class="line">    UIDynamicAnimator *animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];</span><br><span class="line">    UIGravityBehavior *gravityBeahvior = [[UIGravityBehavior alloc] initWithItems:@[aView]];</span><br><span class="line">    [animator addBehavior:gravityBeahvior];</span><br><span class="line">    self.animator = animator;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/images/iOS/uidynamic/lesson/1.gif" alt=""></p>
+<p><img src="/images/iOS/uidynamic/lesson/1.gif" alt></p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">UIDynamicAnimator *animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];</span><br><span class="line">===&gt;</span><br><span class="line">UIDynamicAnimator *animator = [[UIDynamicAnimator alloc] initWithReferenceView:aView];</span><br></pre></td></tr></table></figure>
 <p>比第一个要快,这就不逼真了,而且这样写并不对     </p>
-<p><img src="/images/iOS/uidynamic/lesson/2.gif" alt=""></p>
+<p><img src="/images/iOS/uidynamic/lesson/2.gif" alt></p>
 <p>接下来就是物理仿真了,有重力,得有碰撞啊,这样无界的就没有意义了<br>碰撞也有一个<code>UIDynamicBehavior</code>的子类<code>UICollisionBehavior</code>.    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    UIView *aView = [[UIView alloc] initWithFrame:CGRectMake(100, 50, 100, 100)];</span><br><span class="line">    aView.backgroundColor = [UIColor lightGrayColor];</span><br><span class="line">    aView.transform = CGAffineTransformRotate(aView.transform, 45);</span><br><span class="line">    [self.view addSubview:aView];</span><br><span class="line">    </span><br><span class="line">    UIDynamicAnimator *animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];</span><br><span class="line">    UIGravityBehavior *gravityBeahvior = [[UIGravityBehavior alloc] initWithItems:@[aView]];</span><br><span class="line">    [animator addBehavior:gravityBeahvior];</span><br><span class="line">    self.animator = animator;</span><br><span class="line">    </span><br><span class="line">    UICollisionBehavior *collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[aView]];</span><br><span class="line">    collisionBehavior.translatesReferenceBoundsIntoBoundary = YES;</span><br><span class="line">    [animator addBehavior:collisionBehavior];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在里边加一了一个旋转角,是不是很有意思    </p>
-<p><img src="/images/iOS/uidynamic/lesson/3.gif" alt=""></p>
+<p><img src="/images/iOS/uidynamic/lesson/3.gif" alt></p>
 <p><code>translatesReferenceBoundsIntoBoundary</code>设置以self.view为边界.<code>setTranslatesReferenceBoundsIntoBoundaryWithInsets:</code>方法也可以,更复杂的<code>addBoundaryWithIdentifier:forPath:</code>来添加UIBezierPath,或者<code>addBoundaryWithIdentifier:fromPoint:toPoint:</code>来添加一条线段为边界<br>可以设置collisionBehavior的代理,监听事件.具体的自己看看代码     </p>
 <ul>
 <li>UIAttachmentBehavior描述一个view和一个锚相连接的情况</li>
@@ -1731,7 +1731,7 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2018 Meone&nbsp;
+                &copy; 2019 Meone&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a>
                 </p>
             </div>

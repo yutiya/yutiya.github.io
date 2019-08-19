@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yutiya.github.io/images/iOS/screenOrientation/7.gif">
 <meta property="og:image" content="http://yutiya.github.io/images/iOS/screenOrientation/1.png">
 <meta property="og:image" content="http://yutiya.github.io/images/iOS/screenOrientation/8.gif">
-<meta property="og:updated_time" content="2018-12-12T03:20:07.865Z">
+<meta property="og:updated_time" content="2019-05-28T03:00:12.284Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于iOS屏幕方向让你找到存在感">
 <meta name="twitter:description" content="关于iOS屏幕方向,让你找到方向感看了这篇文章,可能是我太笨,有可能是作者太牛逼,反正我是没看懂,都没下他写的demo写的什么鬼,自己来搞一搞原文链接:http://lvwenhan.com/ios/458.html     新建一个空项目,在target-&amp;gt;General-&amp;gt;Deployment Info中勾选      Protrait Landscape Left Landsca">
@@ -39,7 +39,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://fonts.font.im/css?family=Ubuntu:400,600|Source+Code+Pro">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
 
 
@@ -175,33 +175,33 @@
 <li>Landscape Right</li>
 </ul>
 <p>不然只会支持你所选择的方向(那就没得玩了)<br>然后再Main.storyboard中拖入一个按钮,放到左上角一些,why?因为不在界面上放个东西,改变方向你会晕的<br>现在run,手动改变方向<code>command+⬅️</code>,效果给你个截图    </p>
-<p><img src="/images/iOS/screenOrientation/1.gif" alt=""></p>
+<p><img src="/images/iOS/screenOrientation/1.gif" alt></p>
 <p>可以看到屏幕的方向会随着设备的方向而改变,Landscape Left(顺时针转,home键在左),如果用户锁定了屏幕旋转,那就不用讨论设备转向的情况下屏幕跟随转向的问题了        </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//file ViewController.m</span><br><span class="line">...</span><br><span class="line">- (BOOL)shouldAutorotate</span><br><span class="line">&#123;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <p>显而易见的,这个方法控制我们的页面是否跟随设备转动而改变方向    </p>
-<p><img src="/images/iOS/screenOrientation/2.gif" alt=""></p>
+<p><img src="/images/iOS/screenOrientation/2.gif" alt></p>
 <a id="more"></a>
 <p>我们研究这个的目的是不管用户是否锁定屏幕转向,我们在打开新页面的时候,也需要手动控制viewController显示的方向<br>现在我们新建一个SecondViewController类,往Main.storyboard中拖入一个viewController,绑定SecondViewController,Storyboard ID:secondVC<br>写代码跳转,像这样…    </p>
-<p><img src="/images/iOS/screenOrientation/3.gif" alt=""></p>
+<p><img src="/images/iOS/screenOrientation/3.gif" alt></p>
 <p>加入这个代码到SecondViewController.m中,强制设置屏幕方向,不一定能通过苹果审核噢</p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    if([[UIDevice currentDevice]respondsToSelector:@selector(setOrientation:)]) &#123;</span><br><span class="line">        [[UIDevice currentDevice]performSelector:@selector(setOrientation:)</span><br><span class="line">                                      withObject:@(UIInterfaceOrientationLandscapeLeft)];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/images/iOS/screenOrientation/4.gif" alt=""></p>
+<p><img src="/images/iOS/screenOrientation/4.gif" alt></p>
 <p>时光不能倒流,回不去,对吧,呵呵,强制设置,你可以试试在退出的时候再设置回来,对吧    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)shouldAutorotate</span><br><span class="line">&#123;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/images/iOS/screenOrientation/5.gif" alt=""></p>
+<p><img src="/images/iOS/screenOrientation/5.gif" alt></p>
 <p>如果在加入这个,呵呵,上面那段代码不是扯淡?</p>
 <p>去掉UIDeveice的代码,继续搞…    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//file viewController.m的代码是这样</span><br><span class="line">- (BOOL)shouldAutorotate</span><br><span class="line">&#123;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br><span class="line">- (NSUInteger)supportedInterfaceOrientations</span><br><span class="line">&#123;</span><br><span class="line">    return UIInterfaceOrientationMaskPortrait;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//file SecondViewController.m的代码是这样</span><br><span class="line">- (BOOL)shouldAutorotate</span><br><span class="line">&#123;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br><span class="line">- (NSUInteger)supportedInterfaceOrientations</span><br><span class="line">&#123;</span><br><span class="line">    return UIInterfaceOrientationMaskLandscapeLeft;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/images/iOS/screenOrientation/6.gif" alt=""></p>
+<p><img src="/images/iOS/screenOrientation/6.gif" alt></p>
 <p>百度了一下很多的帖子,实际写代码,不用重写以下方法,why?自我理解,因为我们是自己手动管理屏幕方向,由我们控制每个viewController的显示方向</p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation</span><br><span class="line">&#123;</span><br><span class="line">    return UIInterfaceOrientationLandscapeLeft;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在我们使用的过程中,通常我们是嵌套viewController,比如N+V或者T+N+V等等<br>在Main.storyboard中给ViewController套一个navigationController<br>Editor-&gt;Embed In-&gt;Navigation Controller<br>然后run    </p>
-<p><img src="/images/iOS/screenOrientation/7.gif" alt=""></p>
+<p><img src="/images/iOS/screenOrientation/7.gif" alt></p>
 <p>我们发现,viewController会跟随设备旋转了,新建一个navigationController类,在该类里控制,记住与Main.storyboard中绑定<br><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//file ViewNavigationController.m</span><br><span class="line">// 这是一个navigationController</span><br><span class="line">- (BOOL)shouldAutorotate</span><br><span class="line">&#123;</span><br><span class="line">    return NO;</span><br><span class="line">&#125;</span><br><span class="line">- (NSUInteger)supportedInterfaceOrientations</span><br><span class="line">&#123;</span><br><span class="line">    return UIInterfaceOrientationMaskPortrait;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>此时的Main.storyboard:    </p>
-<p><img src="/images/iOS/screenOrientation/1.png" alt=""></p>
+<p><img src="/images/iOS/screenOrientation/1.png" alt></p>
 <p>效果:    </p>
-<p><img src="/images/iOS/screenOrientation/8.gif" alt=""></p>
+<p><img src="/images/iOS/screenOrientation/8.gif" alt></p>
 <p>看对了吧,此时不管你有没有注释ViewController中的代码，都不会有问题<br>TabBarController也一样<br>所以这个就好理解了吧…,下面的是swift代码,你看不懂?抱歉,我不怎么会,能看懂    </p>
 <figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// tabbarController</span><br><span class="line">func tabBarControllerSupportedInterfaceOrientations(tabBarController: UITabBarController) -&gt; UIInterfaceOrientationMask &#123;</span><br><span class="line">    return self.selectedViewController!.supportedInterfaceOrientations()</span><br><span class="line">&#125;</span><br><span class="line">func tabBarControllerPreferredInterfaceOrientationForPresentation() -&gt; UIInterfaceOrientation &#123;</span><br><span class="line">    return self.selectedViewController!.preferredInterfaceOrientationForPresentation()</span><br><span class="line">&#125;</span><br><span class="line">// navigationController</span><br><span class="line">override func supportedInterfaceOrientations() -&gt; UIInterfaceOrientationMask &#123;</span><br><span class="line">    return self.visibleViewController!.supportedInterfaceOrientations()</span><br><span class="line">&#125;</span><br><span class="line">override func preferredInterfaceOrientationForPresentation() -&gt; UIInterfaceOrientation &#123;</span><br><span class="line">    return self.visibleViewController!.preferredInterfaceOrientationForPresentation()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>总结一下.</p>
@@ -1754,7 +1754,7 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2018 Meone&nbsp;
+                &copy; 2019 Meone&nbsp;
                 Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a>
                 </p>
             </div>
